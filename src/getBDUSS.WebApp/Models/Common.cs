@@ -58,9 +58,11 @@ namespace getBDUSS.WebApp.Models
                 request.KeepAlive = false;
                 if (cookies != null && cookies.Count > 0)
                 {
+                    request.CookieContainer = new CookieContainer();
+                    Uri target = new Uri(url);
                     foreach (string name in cookies.Keys)
                     {
-                        request.CookieContainer.Add(new Cookie(name, cookies[name]));
+                        request.CookieContainer.Add(new Cookie(name, cookies[name]) { Domain = target.Host });
                     }
                 }
                 if (!string.IsNullOrEmpty(referer))
@@ -113,9 +115,11 @@ namespace getBDUSS.WebApp.Models
                 request.KeepAlive = false;
                 if (cookies != null && cookies.Count > 0)
                 {
+                    request.CookieContainer = new CookieContainer();
+                    Uri target = new Uri(url);
                     foreach (string name in cookies.Keys)
                     {
-                        request.CookieContainer.Add(new Cookie(name, cookies[name]));
+                        request.CookieContainer.Add(new Cookie(name, cookies[name]) { Domain = target.Host });
                     }
                 }
                 if (string.IsNullOrEmpty(referer))
@@ -157,13 +161,12 @@ namespace getBDUSS.WebApp.Models
             return rtResult;
         }
 
-        public static Image HttpGetImg(string url, string postDataStr = "", string referer = null, Dictionary<string, string> cookies = null, string ua = null)
+        public static Image HttpGetImg(string url, string referer = null, Dictionary<string, string> cookies = null, string ua = null)
         {
             Image rtResult;
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create
-                    (url + (postDataStr == "" ? "" : "?" + postDataStr));
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
                 request.ContentType = "text/html;charset=UTF-8";
                 // 注意：该 Accept由公开API提供，不能这样修改。参考：https://stackoverflow.com/questions/239725/cannot-set-some-http-headers-when-using-system-net-webrequest
@@ -180,9 +183,11 @@ namespace getBDUSS.WebApp.Models
                 request.KeepAlive = false;
                 if (cookies != null && cookies.Count > 0)
                 {
+                    request.CookieContainer = new CookieContainer();
+                    Uri target = new Uri(url);
                     foreach (string name in cookies.Keys)
                     {
-                        request.CookieContainer.Add(new Cookie(name, cookies[name]));
+                        request.CookieContainer.Add(new Cookie(name, cookies[name]) { Domain = target.Host });
                     }
                 }
                 if (string.IsNullOrEmpty(referer))
