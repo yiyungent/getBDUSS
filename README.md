@@ -4,8 +4,7 @@
 
 
 
-<div align=center>![](https://github.com/yiyungent/getBDUSS/blob/master/docs/images/demo.gif?raw=true)   
-
+<div align=center>![](https://github.com/yiyungent/getBDUSS/blob/master/docs/images/demo.gif?raw=true)</div>   
 
 运行环境：.*NET* *Framework* 4.5+   
    
