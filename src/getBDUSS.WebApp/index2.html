@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
   <meta charset="utf-8"/>
@@ -40,8 +40,10 @@
 </div>
 </div>
 <script>
+// loginload 定时器
+var timer = null;
 function getqrcode(){
-	var getvcurl='login.php?do=getqrcode&r='+Math.random(1);
+	var getvcurl='/api/login.ashx?do=getqrcode&r='+Math.random(1);
 	$.get(getvcurl, function(d) {
 		if(d.code ==0){
 			$('#qrimg').attr('sign',d.sign);
@@ -52,8 +54,8 @@ function getqrcode(){
 				$('#mobile').show();
 			}
 			if($('#qrimg').attr('lock')==undefined){
-				setTimeout(qrlogin,2000);
-				setInterval(loginload,1000);
+				setTimeout(qrlogin, 2000);
+				timer = setInterval(loginload,1000);
 			}
 		}else{
 			alert(d.msg);
@@ -64,7 +66,7 @@ function qrlogin(){
 	$('#qrimg').attr('lock','true');
 	var sign=$('#qrimg').attr('sign');
 	if(sign=='')return;
-	var loginurl="login.php?do=qrlogin";
+	var loginurl="/api/login.ashx?do=qrlogin";
 	$.ajax({
 		type: "POST",
 		url: loginurl,
@@ -98,6 +100,8 @@ function loginload(){
 	document.getElementById('loginload').innerHTML=load;
 }
 function showresult(arr){
+	// 登录成功后清掉 loginload 定时器
+	window.clearInterval(timer);
 	$('#load').html('<div class="alert alert-success">登录成功！'+decodeURIComponent(arr.displayname)+'</div><div class="input-group"><span class="input-group-addon">用户UID</span><input id="uid" value="'+arr.uid+'" class="form-control" /></div><br/><div class="input-group"><span class="input-group-addon">用户名</span><input id="user" value="'+arr.user+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">BDUSS</span><input id="bduss" value="'+arr.bduss+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">PTOKEN</span><input id="ptoken" value="'+arr.ptoken+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">STOKEN</span><input id="stoken" value="'+arr.stoken+'" class="form-control"/></div>');
 }
 function mloginurl(){

@@ -36,7 +36,7 @@ namespace getBDUSS.WebApp.Models
         /// <param name="cookies"></param>
         /// <param name="ua"></param>
         /// <returns>返回请求回复字符串</returns>
-        public static string HttpGet(string url, string postDataStr = "", string referer = null, Dictionary<string, string> cookies = null, string ua = null)
+        public static string HttpGet(string url, string postDataStr = "", string referer = null, Dictionary<string, string> cookies = null, string ua = null, StringBuilder responseHeadersSb = null)
         {
             string rtResult = string.Empty;
             try
@@ -79,8 +79,15 @@ namespace getBDUSS.WebApp.Models
                 }
                 request.Timeout = 10000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (responseHeadersSb != null)
+                {
+                    foreach (string name in response.Headers.AllKeys)
+                    {
+                        responseHeadersSb.AppendLine(name + ": " + response.Headers[name]);
+                    }
+                }
                 Stream responseStream = response.GetResponseStream();
-                //如果http头中接受gzip的话，这里就要判断是否为有压缩，有的话，直接解压缩即可  
+                //如果http头中接受gzip的话，这里就要判断是否为有压缩，有的话，直接解压缩即可 
                 if (response.Headers["Content-Encoding"] != null && response.Headers["Content-Encoding"].ToLower().Contains("gzip"))
                 {
                     responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
@@ -93,7 +100,7 @@ namespace getBDUSS.WebApp.Models
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
             }
             return rtResult;
         }

@@ -5,6 +5,7 @@ using System.Web;
 
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.Text;
 
 namespace getBDUSS.WebApp.Models
 {
@@ -352,22 +353,37 @@ namespace getBDUSS.WebApp.Models
         {
             if (string.IsNullOrEmpty(sign)) return new { code = -1, msg = "sign不能为空" };
             string url = "https://passport.baidu.com/channel/unicast?channel_id=" + sign + "&tpl=pp&gid=07D9D20-91EB-43D8-8553-16A98A0B24AA&apiver=v3&tt=" + Common.GetTimeStamp() + "0000&callback=callback";
+            // BUG：当展示二维码后未进行登录操作，此时因为前端js不断请求二维码登录，然后到此处请求超时，导致返回500，临时解决：取消HttpGet内的抛异常
             string data = Common.HttpGet(url: url, referer: "https://passport.baidu.com/v2/?login");
             string callback = Regex.Match(data, @"callback\((.*?)\)").Groups[1].Value;
             dynamic jsonObj = Common.JsonStr2Obj(callback);
             if (Common.IsPropertyExist(jsonObj, "errno") && jsonObj.errno == "0")
             {
-                jsonObj = Common.JsonStr2Obj(jsonObj.channel_v);
-                data = Common.HttpGet(url: "https://passport.baidu.com/v2/api/bdusslogin?bduss=" + jsonObj.v + "&u=https%3A%2F%2Fpassport.baidu.com%2F&qrcode=1&tpl=pp&apiver=v3&tt=" + Common.GetTimeStamp() + "0000&callback=callback", referer: "https://passport.baidu.com/v2/?login");
+                jsonObj = Common.JsonStr2Obj(jsonObj.channel_v.ToString());
+                StringBuilder sbResHeadersData = new StringBuilder();
+                data = Common.HttpGet(url: "https://passport.baidu.com/v2/api/bdusslogin?bduss=" + jsonObj.v + "&u=https%3A%2F%2Fpassport.baidu.com%2F&qrcode=1&tpl=pp&apiver=v3&tt=" + Common.GetTimeStamp() + "0000&callback=callback", referer: "https://passport.baidu.com/v2/?login", responseHeadersSb: sbResHeadersData);
+                string resHeadersData = sbResHeadersData.ToString();
+
+                #region 调试
+                StringBuilder sbDebug = new StringBuilder();
+                sbDebug.AppendLine("-------" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "------------start--------------------");
+                sbDebug.AppendLine(resHeadersData + Environment.NewLine + Environment.NewLine + data);
+                sbDebug.AppendLine("--------------------end-------------------" + Environment.NewLine);
+
+                System.Diagnostics.Debug.WriteLine(sbDebug.ToString());
+                System.IO.File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + "/App_Data/resData.txt", sbDebug.ToString(), Encoding.UTF8);
+                #endregion
+
                 callback = Regex.Match(data, @"callback\((.*?)\)").Groups[1].Value;
                 jsonObj = Common.JsonStr2Obj(callback);
                 if (Common.IsPropertyExist(jsonObj, "errInfo") && jsonObj.errInfo.no == "0")
                 {
                     data = data.Replace("=deleted", "");
-                    string bduss = Regex.Match(data, @"BDUSS=(.*?);").Groups[1].Value;
-                    string ptoken = Regex.Match(data, @"PTOKEN=(.*?);").Groups[1].Value;
-                    string stoken = Regex.Match(data, @"STOKEN=(.*?);").Groups[1].Value;
-                    string userId = GetUserId(jsonObj.data.userName);
+                    // 注意：bduss, ptoken, stoken 在响应头中
+                    string bduss = Regex.Match(resHeadersData, @"BDUSS=(.*?);").Groups[1].Value;
+                    string ptoken = Regex.Match(resHeadersData, @"PTOKEN=(.*?);").Groups[1].Value;
+                    string stoken = Regex.Match(resHeadersData, @"STOKEN=(.*?);").Groups[1].Value;
+                    string userId = GetUserId(jsonObj.data.userName.ToString());
                     return new { code = 0, uid = userId, user = jsonObj.data.userName, displayname = jsonObj.data.displayname, mail = jsonObj.data.mail, phone = jsonObj.data.phoneNumber, bduss = bduss, ptoken = ptoken, stoken = stoken };
                 }
                 else if (Common.IsPropertyExist(jsonObj, "errInfo"))
