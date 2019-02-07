@@ -1,1 +1,44 @@
-﻿// QrLogin 调试 响应信息
+﻿// QrLogin 调试 响应信息-------2019-02-07 12:53:51------------start--------------------
+Access-Control-Expose-Headers: Trace-ID
+Pragma: public
+Strict-Transport-Security: max-age=31536000
+Trace-Id: 
+Tracecode: 32311730090572646410020712,32311730090290579210020712
+Connection: close
+Content-Length: 25
+Cache-Control: public
+Content-Type: application/json; charset=utf-8
+Date: Thu, 07 Feb 2019 04:53:51 GMT
+Expires: 0
+ETag: w/"r0crLbTAm321H3b4UDRZSALThz2zpy5V:1549515231"
+Last-Modified: Thu, 07 Feb 2019 04:53:51 4FebGMT
+P3P: CP=" OTI DSP COR IVA OUR IND COM "
+Set-Cookie: BAIDUID=6880F234BDE649D89D4EDAF092F637A3:FG=1; expires=Fri, 07-Feb-20 04:53:51 GMT; max-age=31536000; path=/; domain=.baidu.com; version=1
+Server: Apache
+
+
+callback({"errno":-9999})
+--------------------end-------------------
+
+-------2019-02-07 12:53:52------------start--------------------
+Access-Control-Expose-Headers: Trace-ID
+Pragma: public
+Cache-Control: public
+Content-Type: application/json; charset=utf-8
+Date: Thu, 07 Feb 2019 04:53:53 GMT
+Expires: 0
+ETag: w/"zU01BJYWqsb8awL5rmEhL4cygjyitaPn:1549515232"
+Last-Modified: Thu, 07 Feb 2019 04:53:52 4FebGMT
+P3P: CP=" OTI DSP COR IVA OUR IND COM "
+Set-Cookie: STOKEN=4ed955cbffc32b1861360625ee8bc84745bc7e05baaa77f67b35e939cee1d92f; expires=Mon, 26-Apr-2027 04:53:53 GMT; path=/; domain=passport.baidu.com; secure,BDUSS=l1d3c2RHk3YlRCTFp1NGk3Z3c1aGd6SERvdH56clQyaEliOTdMcH54bmdSb05jQVFBQUFBJCQAAAAAAAAAAAEAAADIyFiA0uDUxr76AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOC5W1zguVtcWj; expires=Mon, 26-Apr-2027 04:53:53 GMT; path=/; domain=baidu.com,PTOKEN=ae0baa4b5f036f2059f3596e8979cf12; expires=Mon, 26-Apr-2027 04:53:53 GMT; path=/; domain=passport.baidu.com; secure,BAIDUID=60817B7F74D93C754705AC6E49428EB4:FG=1; expires=Fri, 07-Feb-20 04:53:53 GMT; max-age=31536000; path=/; domain=.baidu.com; version=1
+Server: Apache
+Strict-Transport-Security: max-age=31536000
+Trace-Id: 
+Tracecode: 32328371330497607946020712,32328371332521883402020712
+Connection: close
+Transfer-Encoding: chunked
+
+
+callback({"data":{"callback":"callback","gotourl":"","hao123Param":"bDFkM2MyUkhrM1lsUkNURnAxTkdrM1ozYzFhR2Q2U0VSdmRINTZjbFF5YUVsaU9UZE1jSDU0Ym1kU2IwNWpRVkZCUVVGQkpDUUFBQUFBQUFBQUFBRUFBQURJeUZpQTB1RFV4cjc2QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFPQzVXMXpndVZ0Y1dq","mail":"yi...t@126.com","needToModifyPassword":false,"phoneNumber":"150******02","secState":"","u":"https:\/\/passport.baidu.com\/","userName":"\u4ea6\u4e91\u83cc","displayname":"\u4ea6\u4e91\u83cc","portrait":"https:\/\/ss0.bdstatic.com\/7Ls0a8Sm1A5BphGlnYG\/sys\/portrait\/item\/c8c8e4baa6e4ba91e88f8c5880.jpg"},"errInfo":{"msg":"","no":0}})
+--------------------end-------------------
+
