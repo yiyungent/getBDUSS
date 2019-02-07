@@ -42,6 +42,8 @@
 </div>
 </div>
 <script>
+// loginload 定时器
+var timer = null;
 function getqrcode(){
 	var getvcurl='/api/thirdpartylogin.ashx?do=getwxpic&r='+Math.random(1);
 	$.get(getvcurl, function(d) {
@@ -50,7 +52,7 @@ function getqrcode(){
 			$('#qrimg').html('<img id="qrcodeimg" onclick="getqrcode()" style="max-width:240px" src="'+d.imgurl+'" title="点击刷新">');
 			if($('#qrimg').attr('lock')==undefined){
 				setTimeout(qrlogin,2000);
-				setInterval(loginload,1000);
+				timer = setInterval(loginload,1000);
 			}
 		}else{
 			alert(d.msg);
@@ -107,6 +109,7 @@ function loginload(){
 	document.getElementById('loginload').innerHTML=load;
 }
 function showresult(arr){
+	window.clearInterval(timer);
 	$('#login').html('<div class="alert alert-success">登录成功！'+decodeURIComponent(arr.displayname)+'</div><div class="input-group"><span class="input-group-addon">用户UID</span><input id="uid" value="'+arr.uid+'" class="form-control" /></div><br/><div class="input-group"><span class="input-group-addon">用户名</span><input id="user" value="'+arr.user+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">BDUSS</span><input id="bduss" value="'+arr.bduss+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">PTOKEN</span><input id="ptoken" value="'+arr.ptoken+'" class="form-control"/></div><br/><div class="input-group"><span class="input-group-addon">STOKEN</span><input id="stoken" value="'+arr.stoken+'" class="form-control"/></div>');
 }
 $(document).ready(function(){
