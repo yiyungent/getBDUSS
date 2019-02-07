@@ -36,6 +36,10 @@ namespace getBDUSS.WebApp.Api
             {
                 jsonObj = weiXinLogin.GetWeiXinPic();
             }
+            if ("wxlogin" == doAction)
+            {
+                jsonObj = weiXinLogin.Login(context.Request.QueryString["uuid"], context.Request.QueryString["last"]);
+            }
 
             context.Response.Write(JsonConvert.SerializeObject(jsonObj));
         }
