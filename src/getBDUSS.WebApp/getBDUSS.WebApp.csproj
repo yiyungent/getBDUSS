@@ -77,13 +77,18 @@
     <Compile Include="Api\Login.ashx.cs">
       <DependentUpon>Login.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Api\ThirdPartyLogin.ashx.cs">
+      <DependentUpon>ThirdPartyLogin.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Models\BaiduLogin.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\RFC3986Encoder.cs" />
+    <Compile Include="Models\WeiXinLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Api\Login.ashx" />
+    <Content Include="Api\ThirdPartyLogin.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

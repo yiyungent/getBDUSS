@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
   <meta charset="utf-8"/>
@@ -43,7 +43,7 @@
 </div>
 <script>
 function getqrcode(){
-	var getvcurl='qqlogin.php?do=getwxpic&r='+Math.random(1);
+	var getvcurl='/api/thirdpartylogin.ashx?do=getwxpic&r='+Math.random(1);
 	$.get(getvcurl, function(d) {
 		if(d.code ==0){
 			$('#qrimg').attr('uuid',d.uuid);
@@ -63,9 +63,9 @@ function qrlogin(last){
 	var uuid=$('#qrimg').attr('uuid');
 	if(uuid=='')return;
 	if(last!=null){
-		var loginurl = "qqlogin.php?do=wxlogin&uuid="+uuid+"&last="+last+"&r="+Math.random(1);
+		var loginurl = "/api/thirdpartylogin.ashx?do=wxlogin&uuid="+uuid+"&last="+last+"&r="+Math.random(1);
 	}else{
-		var loginurl = "qqlogin.php?do=wxlogin&uuid="+uuid+"&r="+Math.random(1);
+		var loginurl = "/api/thirdpartylogin.ashx?do=wxlogin&uuid="+uuid+"&r="+Math.random(1);
 	}
 	$.ajax({
 		type: "GET",
